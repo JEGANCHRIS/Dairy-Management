@@ -1,0 +1,17 @@
+{
+  "name": "dairy-management",
+  "version": "1.0.0",
+  "description": "Dairy Products E-commerce Website",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backEnd && npm run dev",
+    "client": "cd frontEnd && npm start",
+    "install-server": "cd backEnd && npm install",
+    "install-client": "cd frontEnd && npm install",
+    "install-all": "npm run install-server && npm run install-client",
+    "seed": "cd backEnd && npm run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}

@@ -1,0 +1,500 @@
+/* Blogs Page Styles */
+.blogs-page {
+  padding: 3rem 0;
+  min-height: calc(100vh - 200px);
+  background-color: #f8f9fa;
+  width: 100%;
+}
+
+.blogs-page .container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.blogs-page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 2.5rem;
+}
+
+/* Blog Tags Filter */
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.tag-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e0e0e0;
+  background: white;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.tag-btn:hover {
+  background: #f0f0f0;
+  border-color: #3498db;
+}
+
+.tag-btn.active {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+/* Blogs Grid */
+.blogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Blog Card */
+.blog-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.blog-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.blog-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.blog-card:hover .blog-image img {
+  transform: scale(1.1);
+}
+
+.blog-content {
+  padding: 1.5rem;
+}
+
+.blog-content h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  line-height: 1.4;
+}
+
+.blog-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  flex-wrap: wrap;
+}
+
+.blog-author {
+  font-weight: 600;
+  color: #3498db;
+}
+
+.blog-date, .blog-views {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.blog-excerpt {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.blog-tag {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  background: #f0f0f0;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.blog-tag:hover {
+  background: #3498db;
+  color: white;
+}
+
+/* Blog Detail Page */
+.blog-detail-page {
+  padding: 3rem 0;
+  min-height: calc(100vh - 200px);
+  background-color: #f8f9fa;
+}
+
+.blog-detail {
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 3rem;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.blog-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.blog-featured-image {
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.blog-featured-image img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.blog-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.blog-content p {
+  margin-bottom: 1.5rem;
+}
+
+.blog-content h2 {
+  margin: 2rem 0 1rem;
+  color: #2c3e50;
+}
+
+.blog-content h3 {
+  margin: 1.5rem 0 1rem;
+  color: #34495e;
+}
+
+.blog-content ul, .blog-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-content blockquote {
+  padding: 1rem 2rem;
+  margin: 1.5rem 0;
+  background: #f8f9fa;
+  border-left: 4px solid #3498db;
+  font-style: italic;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+/* Related Blogs */
+.related-blogs {
+  margin-top: 3rem;
+}
+
+.related-blogs h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+.related-blogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.related-blog-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s;
+}
+
+.related-blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.related-blog-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.related-blog-card h3 {
+  padding: 1rem 1rem 0.5rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.related-blog-card p {
+  padding: 0 1rem 1rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  font-size: 1.2rem;
+}
+
+/* Error State */
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: #e74c3c;
+  font-size: 1.2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .blogs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-header h1 {
+    font-size: 2rem;
+  }
+
+  .blog-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .related-blogs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-content {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blogs-page h1 {
+    font-size: 2rem;
+  }
+
+  .blog-content h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* ========================================
+   Dark Mode Blogs Styles
+======================================== */
+
+.dark-mode .blogs-page {
+  background: var(--bg-secondary);
+}
+
+.dark-mode .blogs-page h1 {
+  color: var(--text-primary);
+}
+
+.dark-mode .blog-tags {
+  background: transparent;
+}
+
+.dark-mode .tag-btn {
+  background: rgba(15, 32, 39, 0.6);
+  border-color: rgba(166, 251, 101, 0.2);
+  color: var(--text-secondary);
+}
+
+.dark-mode .tag-btn:hover {
+  background: rgba(166, 251, 101, 0.2);
+  border-color: var(--accent-green);
+}
+
+.dark-mode .tag-btn.active {
+  background: linear-gradient(135deg, #a6fb65 0%, #FBDB65 100%);
+  color: #0f2027;
+  border-color: var(--accent-green);
+}
+
+.dark-mode .blogs-grid {
+  background: transparent;
+}
+
+.dark-mode .blog-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.dark-mode .blog-card:hover {
+  box-shadow: 0 8px 30px rgba(166, 251, 101, 0.2);
+}
+
+.dark-mode .blog-content h2 {
+  color: var(--text-primary);
+}
+
+.dark-mode .blog-meta {
+  color: var(--text-secondary);
+}
+
+.dark-mode .blog-excerpt {
+  color: var(--text-secondary);
+}
+
+.dark-mode .read-more {
+  color: var(--accent-green);
+}
+
+.dark-mode .read-more:hover {
+  color: var(--accent-yellow);
+}
+
+.dark-mode .blog-header {
+  background: var(--card-bg);
+  border-bottom-color: rgba(166, 251, 101, 0.2);
+}
+
+.dark-mode .blog-header h1 {
+  color: var(--text-primary);
+}
+
+.dark-mode .blog-header-meta {
+  color: var(--text-secondary);
+}
+
+.dark-mode .blog-detail-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.dark-mode .blog-detail-content h2 {
+  color: var(--text-primary);
+}
+
+.dark-mode .blog-detail-content p {
+  color: var(--text-secondary);
+}
+
+.dark-mode .blog-detail-content h3 {
+  color: var(--text-primary);
+}
+
+.dark-mode .related-blogs-grid {
+  background: transparent;
+}
+
+.dark-mode .pagination {
+  background: transparent;
+}
+
+.dark-mode .pagination-btn {
+  background: rgba(15, 32, 39, 0.6);
+  border-color: rgba(166, 251, 101, 0.2);
+  color: var(--text-primary);
+}
+
+.dark-mode .pagination-btn:hover:not(:disabled) {
+  background: rgba(166, 251, 101, 0.2);
+  border-color: var(--accent-green);
+}
+
+.dark-mode .pagination-btn:disabled {
+  background: rgba(15, 32, 39, 0.3);
+  color: var(--text-secondary);
+}
+
+.dark-mode .page-info {
+  color: var(--text-secondary);
+}

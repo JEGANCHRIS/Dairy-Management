@@ -1,0 +1,3 @@
+## Qwen Added Memories
+- Nav-link "1st model" hover style: Pill-shaped background that scales from center (scale 0→1), 20px border radius, diagonal gradient fill (rgba(166,251,101,0.3) to rgba(251,219,101,0.2)), gradient border glow at inset -2px with 50% opacity, 2px translateY lift on hover, icon scales to 1.15x, clean smooth transitions
+- Nav-link "2nd model" hover style: Corner accent brackets (top-left + bottom-right), 6px border radius, top-left uses green border (#a6fb65), bottom-right uses yellow border (#fbdb65), background fills from left with scaleX animation, full border appears on hover with green tint, icon scales 1.1x with 5deg rotation and green glow shadow, technical/enterprise aesthetic

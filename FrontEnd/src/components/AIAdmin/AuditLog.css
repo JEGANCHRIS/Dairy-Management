@@ -1,0 +1,397 @@
+/* ── Audit Log - Clean Modern UI ────────────────────────────────────────────── */
+.al-wrapper {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.al-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #f9fafb;
+}
+
+.al-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.al-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+}
+
+.al-icon-svg {
+  width: 22px !important;
+  height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  filter: brightness(0) invert(1);
+}
+
+.al-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: -0.025em;
+}
+
+.al-header p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.al-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.al-filters select {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #374151;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+
+.al-filters select:hover {
+  border-color: #9ca3af;
+}
+
+.al-filters select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.al-loading,
+.al-empty {
+  padding: 60px 40px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Table - Clean Design */
+.al-table-wrap {
+  overflow-x: auto;
+}
+
+.al-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.al-table th {
+  background: #f9fafb;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.al-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+  color: #374151;
+}
+
+.al-table tr:last-child td {
+  border-bottom: none;
+}
+
+.al-table tr:hover td {
+  background: #f9fafb;
+}
+
+/* Outcome - Clean Badge Style */
+.al-outcome-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.al-outcome-details-text {
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.al-outcome-icon {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.al-time {
+  color: #6b7280;
+  font-size: 12px;
+  white-space: nowrap;
+  font-family: "SF Mono", Monaco, monospace;
+}
+
+.al-cmd {
+  max-width: 220px;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.al-intent {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-weight: 500;
+  border: 1px solid #dbeafe;
+}
+
+/* Confidence bar - Clean */
+.al-conf-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+}
+
+.al-conf-bar > div {
+  height: 6px;
+  border-radius: 3px;
+  flex: 1;
+  max-width: 48px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.al-conf-fill {
+  height: 6px;
+  border-radius: 3px;
+  transition: width 0.2s ease;
+}
+
+.al-conf-bar span {
+  font-size: 12px;
+  color: #6b7280;
+  min-width: 32px;
+  font-weight: 600;
+}
+
+.al-decision {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.al-reviewer {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Pagination - Clean */
+.al-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.al-pagination button {
+  padding: 8px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.al-pagination button:hover:not(:disabled) {
+  background: #667eea;
+  color: #ffffff;
+  border-color: #667eea;
+}
+
+.al-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.al-pagination span {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+  padding: 6px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+/* ── Dark Mode ───────────────────────────────────────────────────────── */
+.dark-mode .al-wrapper {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .al-header {
+  border-bottom-color: #374151;
+  background: #111827;
+}
+
+.dark-mode .al-header h3 {
+  color: #f9fafb;
+}
+
+.dark-mode .al-header p {
+  color: #9ca3af;
+}
+
+.dark-mode .al-icon {
+  background: linear-gradient(135deg, #a6fb65 0%, #fbdb65 100%);
+}
+
+.dark-mode .al-icon-svg {
+  filter: none;
+}
+
+.dark-mode .al-filters select {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark-mode .al-filters select:hover {
+  border-color: #4b5563;
+}
+
+.dark-mode .al-filters select:focus {
+  border-color: #a6fb65;
+  box-shadow: 0 0 0 3px rgba(166, 251, 101, 0.15);
+}
+
+.dark-mode .al-table th {
+  background: #111827;
+  color: #9ca3af;
+  border-bottom-color: #374151;
+}
+
+.dark-mode .al-table td {
+  border-bottom-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark-mode .al-table tr:hover td {
+  background: #111827;
+}
+
+.dark-mode .al-intent {
+  background: rgba(166, 251, 101, 0.1);
+  color: #a6fb65;
+  border-color: rgba(166, 251, 101, 0.2);
+}
+
+.dark-mode .al-cmd {
+  color: #9ca3af;
+}
+
+.dark-mode .al-conf-bar > div {
+  background: #374151;
+}
+
+.dark-mode .al-conf-bar span {
+  color: #9ca3af;
+}
+
+.dark-mode .al-outcome-details {
+  background: #111827;
+  border-color: #374151;
+}
+
+.dark-mode .al-outcome-details-text {
+  color: #d1d5db;
+}
+
+.dark-mode .al-time {
+  color: #9ca3af;
+}
+
+.dark-mode .al-reviewer {
+  color: #9ca3af;
+}
+
+.dark-mode .al-pagination {
+  border-top-color: #374151;
+  background: #111827;
+}
+
+.dark-mode .al-pagination button {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark-mode .al-pagination button:hover:not(:disabled) {
+  background: #a6fb65;
+  color: #1f2937;
+  border-color: #a6fb65;
+}
+
+.dark-mode .al-pagination span {
+  background: #1f2937;
+  border-color: #374151;
+  color: #9ca3af;
+}
