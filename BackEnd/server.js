@@ -36,6 +36,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
+// Serve static frontend files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../FrontEnd/dist")));
+
+  // Serve index.html for all non-API routes (SPA routing)
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+    res.sendFile(path.join(__dirname, "../FrontEnd/dist/index.html"));
+  });
+}
+
 // Logging middleware - log ALL requests
 app.use((req, res, next) => {
   console.log(`📨 ${req.method} ${req.path}`);

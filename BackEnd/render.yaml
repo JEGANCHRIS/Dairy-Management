@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: dairy-management-backend
+    name: dairy-management
     env: node
     region: oregon
     plan: free
-    buildCommand: npm install
+    buildCommand: cd FrontEnd && npm install && npm run build && cd ../BackEnd && npm install
     startCommand: node server.js
     envVars:
       - key: NODE_ENV
@@ -16,4 +16,10 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
+        sync: false
+      - key: OLLAMA_URL
+        sync: false
+      - key: OLLAMA_MODEL
+        value: llama3.2
+      - key: ML_SERVICE_URL
         sync: false
