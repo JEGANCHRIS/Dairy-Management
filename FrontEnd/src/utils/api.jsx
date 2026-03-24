@@ -1,8 +1,10 @@
 import axios from "axios";
 
-// Use Vite proxy - requests will be proxied to backend
+// Use environment variable for backend URL in production, Vite proxy in development
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +15,13 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    console.log('🔑 API Request:', config.method?.toUpperCase(), config.url, '- Token:', token ? 'PRESENT (' + token.substring(0, 20) + '...)' : 'MISSING');
+    console.log(
+      "🔑 API Request:",
+      config.method?.toUpperCase(),
+      config.url,
+      "- Token:",
+      token ? "PRESENT (" + token.substring(0, 20) + "...)" : "MISSING",
+    );
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -27,11 +35,23 @@ api.interceptors.request.use(
 // Response interceptor for error handling
 api.interceptors.response.use(
   (response) => {
-    console.log('✅ API Response:', response.config.url, '- Status:', response.status);
+    console.log(
+      "✅ API Response:",
+      response.config.url,
+      "- Status:",
+      response.status,
+    );
     return response;
   },
   (error) => {
-    console.error('❌ API Error:', error.config?.url, '- Status:', error.response?.status, '- Error:', error.response?.data?.error || error.message);
+    console.error(
+      "❌ API Error:",
+      error.config?.url,
+      "- Status:",
+      error.response?.status,
+      "- Error:",
+      error.response?.data?.error || error.message,
+    );
     // Don't auto-redirect on 401 - let components handle it
     return Promise.reject(error);
   },
