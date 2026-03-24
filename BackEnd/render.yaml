@@ -4,8 +4,8 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: cd ../FrontEnd && npm install && npm run build && cd ../BackEnd && npm install
-    startCommand: node server.js
+    buildCommand: npm --prefix FrontEnd install && npm --prefix FrontEnd run build && npm --prefix BackEnd install
+    startCommand: node BackEnd/server.js
     envVars:
       - key: NODE_ENV
         value: production
