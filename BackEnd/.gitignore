@@ -2,10 +2,12 @@
 node_modules/
 package-lock.json
 
-# Environment variables
+# Environment variables (keep .env.example, ignore actual .env)
 .env
 .env.local
 .env.production
+# But keep .env.example for reference
+!.env.example
 
 # Logs
 logs/
