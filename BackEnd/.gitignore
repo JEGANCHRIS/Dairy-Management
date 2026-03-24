@@ -7,15 +7,24 @@ package-lock.json
 .env.local
 .env.production
 
-# Build output
-dist/
-build/
-
 # Logs
 logs/
 *.log
 npm-debug.log*
-vite-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+.nyc_output/
+
+# Build output
+dist/
+build/
 
 # IDE
 .idea/
@@ -27,11 +36,9 @@ vite-debug.log*
 .DS_Store
 Thumbs.db
 
+# Uploads (if not needed in repo)
+uploads/
+
 # Temporary files
 tmp/
 temp/
-*.tmp
-
-# Test files (if not needed in repo)
-*.test.js
-*.spec.js
