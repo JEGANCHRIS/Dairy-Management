@@ -1,7 +1,9 @@
 #!/bin/bash
-
-# Exit on error
 set -e
+
+echo "==> Current directory: $(pwd)"
+echo "==> Listing files:"
+ls -la
 
 echo "==> Installing FrontEnd dependencies..."
 cd FrontEnd
@@ -10,11 +12,20 @@ npm install
 echo "==> Building FrontEnd..."
 npm run build
 
+echo "==> Listing dist contents:"
+ls -la dist/
+
 echo "==> Copying dist to BackEnd/public..."
+rm -rf ../BackEnd/public
 cp -r dist ../BackEnd/public
+
+echo "==> Verifying copy:"
+ls -la ../BackEnd/public/
 
 echo "==> Installing BackEnd dependencies..."
 cd ../BackEnd
 npm install
 
 echo "==> Build complete!"
+echo "==> Public folder contents:"
+ls -la public/
