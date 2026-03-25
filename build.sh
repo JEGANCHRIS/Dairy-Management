@@ -10,6 +10,9 @@ npm install
 echo "==> Building FrontEnd..."
 npm run build
 
+echo "==> Copying dist to BackEnd/public..."
+cp -r dist ../BackEnd/public
+
 echo "==> Installing BackEnd dependencies..."
 cd ../BackEnd
 npm install

@@ -45,36 +45,21 @@ app.use((req, res, next) => {
 
 // Serve static frontend files in production
 if (process.env.NODE_ENV === "production") {
-  // The dist folder is at FrontEnd/dist relative to repo root
-  // When running from BackEnd/, we need to go up one level
-  const distPath = path.join(__dirname, "..", "FrontEnd", "dist");
+  // Serve from BackEnd/public (where dist is copied during build)
+  const publicPath = path.join(__dirname, "public");
 
   try {
     const fs = require("fs");
-    if (fs.existsSync(distPath)) {
-      console.log(`📁 Found frontend dist at: ${distPath}`);
-      console.log(`✅ Serving static files from: ${distPath}`);
-
-      // Log files in dist folder
-      const files = fs.readdirSync(distPath);
-      console.log(`📄 Files in dist: ${files.join(", ")}`);
-
-      app.use(
-        express.static(distPath, {
-          fallthrough: true,
-        }),
-      );
+    if (fs.existsSync(publicPath)) {
+      console.log(`📁 Serving frontend from: ${publicPath}`);
+      const files = fs.readdirSync(publicPath);
+      console.log(`📄 Files: ${files.join(", ")}`);
+      app.use(express.static(publicPath));
     } else {
-      console.log(`⚠️  Frontend dist folder not found at: ${distPath}`);
-      // Try alternative path
-      const altPath = path.join(process.cwd(), "FrontEnd", "dist");
-      if (fs.existsSync(altPath)) {
-        console.log(`📁 Found frontend dist at alternative path: ${altPath}`);
-        app.use(express.static(altPath));
-      }
+      console.log(`⚠️  Public folder not found at: ${publicPath}`);
     }
   } catch (err) {
-    console.error(`❌ Error setting up static files:`, err.message);
+    console.error(`❌ Error with static files:`, err.message);
   }
 }
 
@@ -186,9 +171,8 @@ if (process.env.NODE_ENV === "production") {
       return next();
     }
 
-    // Find dist path and serve index.html
-    const distPath = path.join(__dirname, "..", "FrontEnd", "dist");
-    const indexPath = path.join(distPath, "index.html");
+    // Serve index.html from public folder
+    const indexPath = path.join(__dirname, "public", "index.html");
 
     try {
       const fs = require("fs");
