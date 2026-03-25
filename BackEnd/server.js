@@ -45,23 +45,36 @@ app.use((req, res, next) => {
 
 // Serve static frontend files in production
 if (process.env.NODE_ENV === "production") {
-  // Try multiple possible paths for the dist folder
-  const distPaths = [
-    path.join(__dirname, "../FrontEnd/dist"),
-    path.join(__dirname, "../../FrontEnd/dist"),
-    path.join(process.cwd(), "FrontEnd/dist"),
-  ];
+  // The dist folder is at FrontEnd/dist relative to repo root
+  // When running from BackEnd/, we need to go up one level
+  const distPath = path.join(__dirname, "..", "FrontEnd", "dist");
 
-  let distPath = distPaths.find((p) => {
-    const exists = require("fs").existsSync(p);
-    if (exists) console.log(`📁 Found frontend dist at: ${p}`);
-    return exists;
-  });
+  try {
+    const fs = require("fs");
+    if (fs.existsSync(distPath)) {
+      console.log(`📁 Found frontend dist at: ${distPath}`);
+      console.log(`✅ Serving static files from: ${distPath}`);
 
-  if (distPath) {
-    app.use(express.static(distPath));
-  } else {
-    console.log("⚠️  Frontend dist folder not found!");
+      // Log files in dist folder
+      const files = fs.readdirSync(distPath);
+      console.log(`📄 Files in dist: ${files.join(", ")}`);
+
+      app.use(
+        express.static(distPath, {
+          fallthrough: true,
+        }),
+      );
+    } else {
+      console.log(`⚠️  Frontend dist folder not found at: ${distPath}`);
+      // Try alternative path
+      const altPath = path.join(process.cwd(), "FrontEnd", "dist");
+      if (fs.existsSync(altPath)) {
+        console.log(`📁 Found frontend dist at alternative path: ${altPath}`);
+        app.use(express.static(altPath));
+      }
+    }
+  } catch (err) {
+    console.error(`❌ Error setting up static files:`, err.message);
   }
 }
 
@@ -174,17 +187,19 @@ if (process.env.NODE_ENV === "production") {
     }
 
     // Find dist path and serve index.html
-    const distPaths = [
-      path.join(__dirname, "../FrontEnd/dist"),
-      path.join(__dirname, "../../FrontEnd/dist"),
-      path.join(process.cwd(), "FrontEnd/dist"),
-    ];
+    const distPath = path.join(__dirname, "..", "FrontEnd", "dist");
+    const indexPath = path.join(distPath, "index.html");
 
-    let distPath = distPaths.find((p) => require("fs").existsSync(p));
-
-    if (distPath) {
-      res.sendFile(path.join(distPath, "index.html"));
-    } else {
+    try {
+      const fs = require("fs");
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        console.log(`⚠️  index.html not found at: ${indexPath}`);
+        next();
+      }
+    } catch (err) {
+      console.error(`❌ Error serving index.html:`, err.message);
       next();
     }
   });
