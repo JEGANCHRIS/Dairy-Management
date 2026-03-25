@@ -37,25 +37,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
-// Serve static frontend files in production
-// FIXED: Using app.use instead of app.get("*") to avoid path-to-regexp error
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../FrontEnd/dist")));
-
-  // Serve index.html for all non-API routes (SPA routing)
-  app.use((req, res, next) => {
-    if (req.path.startsWith("/api")) {
-      return next();
-    }
-    res.sendFile(path.join(__dirname, "../FrontEnd/dist/index.html"));
-  });
-}
-
 // Logging middleware - log ALL requests
 app.use((req, res, next) => {
   console.log(`📨 ${req.method} ${req.path}`);
   next();
 });
+
+// Serve static frontend files in production (MUST be before API routes catch)
+if (process.env.NODE_ENV === "production") {
+  const distPath = path.join(__dirname, "../FrontEnd/dist");
+  console.log(`📁 Serving frontend from: ${distPath}`);
+  app.use(express.static(distPath));
+}
 
 // ==========================================
 // PUBLIC ROUTES
@@ -153,6 +146,20 @@ app.use((err, req, res, next) => {
     error: err.message,
   });
 });
+
+// SPA catch-all route - serve index.html for non-API routes (MUST be last)
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (
+      req.path.startsWith("/api") ||
+      req.path.startsWith("/uploads") ||
+      req.path.startsWith("/assets")
+    ) {
+      return next();
+    }
+    res.sendFile(path.join(__dirname, "../FrontEnd/dist/index.html"));
+  });
+}
 
 // ==========================================
 // START SERVER
