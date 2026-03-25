@@ -43,11 +43,26 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static frontend files in production (MUST be before API routes catch)
+// Serve static frontend files in production
 if (process.env.NODE_ENV === "production") {
-  const distPath = path.join(__dirname, "../FrontEnd/dist");
-  console.log(`📁 Serving frontend from: ${distPath}`);
-  app.use(express.static(distPath));
+  // Try multiple possible paths for the dist folder
+  const distPaths = [
+    path.join(__dirname, "../FrontEnd/dist"),
+    path.join(__dirname, "../../FrontEnd/dist"),
+    path.join(process.cwd(), "FrontEnd/dist"),
+  ];
+
+  let distPath = distPaths.find((p) => {
+    const exists = require("fs").existsSync(p);
+    if (exists) console.log(`📁 Found frontend dist at: ${p}`);
+    return exists;
+  });
+
+  if (distPath) {
+    app.use(express.static(distPath));
+  } else {
+    console.log("⚠️  Frontend dist folder not found!");
+  }
 }
 
 // ==========================================
@@ -157,7 +172,21 @@ if (process.env.NODE_ENV === "production") {
     ) {
       return next();
     }
-    res.sendFile(path.join(__dirname, "../FrontEnd/dist/index.html"));
+
+    // Find dist path and serve index.html
+    const distPaths = [
+      path.join(__dirname, "../FrontEnd/dist"),
+      path.join(__dirname, "../../FrontEnd/dist"),
+      path.join(process.cwd(), "FrontEnd/dist"),
+    ];
+
+    let distPath = distPaths.find((p) => require("fs").existsSync(p));
+
+    if (distPath) {
+      res.sendFile(path.join(distPath, "index.html"));
+    } else {
+      next();
+    }
   });
 }
 
