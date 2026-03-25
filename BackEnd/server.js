@@ -37,6 +37,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 // Serve static frontend files in production
+// FIXED: Using app.use instead of app.get("*") to avoid path-to-regexp error
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../FrontEnd/dist")));
 
