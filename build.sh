@@ -5,6 +5,12 @@ echo "==> Current directory: $(pwd)"
 echo "==> Listing files:"
 ls -la
 
+# Remove any existing .env to ensure clean build
+echo "==> Removing any existing .env files..."
+rm -f FrontEnd/.env
+echo "VITE_API_URL=" > FrontEnd/.env
+cat FrontEnd/.env
+
 echo "==> Installing FrontEnd dependencies..."
 cd FrontEnd
 npm install
