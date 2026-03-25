@@ -1,6 +1,7 @@
 import axios from "axios";
 
-// Use environment variable for backend URL in production, empty string in development (uses Vite proxy)
+// In production, use relative URLs (same domain as the server)
+// In development, use the Vite proxy
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 const api = axios.create({
@@ -10,6 +11,14 @@ const api = axios.create({
   },
   withCredentials: true,
 });
+
+// Force baseURL to empty string if it contains localhost in production
+if (
+  typeof window !== "undefined" &&
+  !window.location.hostname.includes("localhost")
+) {
+  api.defaults.baseURL = "";
+}
 
 // Request interceptor to add token
 api.interceptors.request.use(
