@@ -157,9 +157,11 @@ app.use((err, req, res, next) => {
 // ==========================================
 // START SERVER
 // ==========================================
+
+// Connect to DB asynchronously (non-blocking)
 connectDB();
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`\n🚀 Server running on port ${PORT}`);
   console.log(
     `📌 MongoDB: ${process.env.MONGODB_URI || "mongodb://localhost:27017/DairyManagement"}`,
