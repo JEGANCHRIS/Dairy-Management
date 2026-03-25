@@ -14,7 +14,7 @@ services:
       - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
-        generateValue: true
+        value: dairy-management-secret-2024-production-key-change-this
       - key: FRONTEND_URL
         sync: false
       - key: OLLAMA_URL
