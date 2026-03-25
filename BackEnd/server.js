@@ -1,13 +1,22 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allow all CORS requests
-app.use(cors());
+// Manual CORS headers - allow everything
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
