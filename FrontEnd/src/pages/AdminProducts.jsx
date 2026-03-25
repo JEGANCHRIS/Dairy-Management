@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import api from "../utils/api";
 import { success, error, confirm } from "../utils/toast.jsx";
-import "../styles/adminproducts.css";
+import "../styles/adminProducts.css";
 import ProductBoxIcon from "../assets/product-box.svg";
 import CheckIcon from "../assets/check.svg";
 import CrossMarkIcon from "../assets/cross-mark.svg";
