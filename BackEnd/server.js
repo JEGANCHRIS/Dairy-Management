@@ -6,24 +6,9 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Basic middleware
-// Accept any localhost port (dev) + explicit FRONTEND_URL in production
+// Basic middleware - Allow ALL origins in production (Render)
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Postman / curl
-    const allowed = (process.env.FRONTEND_URL || "")
-      .split(",")
-      .map((u) => u.trim())
-      .filter(Boolean);
-    if (
-      allowed.includes(origin) ||
-      /^http:\/\/localhost:\d+$/.test(origin) ||
-      /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)
-    ) {
-      return callback(null, true);
-    }
-    return callback(new Error("CORS: origin not allowed — " + origin));
-  },
+  origin: true, // Allow all origins
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
