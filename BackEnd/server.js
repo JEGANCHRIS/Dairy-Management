@@ -170,22 +170,28 @@ app.listen(PORT, () => {
   console.log("   POST http://localhost:5000/api/contact/test");
   console.log("   POST http://localhost:5000/api/contact (Submit form)\n");
 
-  // Pre-warm Ollama model so first chat request is fast
-  const ollamaUrl = process.env.OLLAMA_URL || "http://localhost:11434";
-  const ollamaModel = process.env.OLLAMA_MODEL || "llama3.2";
-  console.log(`🤖 Pre-warming Ollama model: ${ollamaModel} ...`);
-  fetch(`${ollamaUrl}/api/chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: ollamaModel,
-      messages: [{ role: "user", content: "hi" }],
-      stream: false,
-      options: { num_predict: 1 },
-    }),
-  })
-    .then(() => console.log(`✅ Ollama model ready\n`))
-    .catch(() =>
-      console.log(`⚠️  Ollama pre-warm failed — make sure Ollama is running\n`),
-    );
+  // Pre-warm Ollama model asynchronously (non-blocking)
+  if (process.env.OLLAMA_URL) {
+    const ollamaUrl = process.env.OLLAMA_URL;
+    const ollamaModel = process.env.OLLAMA_MODEL || "llama3.2";
+    console.log(`🤖 Pre-warming Ollama model: ${ollamaModel} (async)...`);
+    setTimeout(() => {
+      fetch(`${ollamaUrl}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: ollamaModel,
+          messages: [{ role: "user", content: "hi" }],
+          stream: false,
+          options: { num_predict: 1 },
+        }),
+      })
+        .then(() => console.log(`✅ Ollama model ready\n`))
+        .catch(() =>
+          console.log(
+            `⚠️  Ollama pre-warm failed — make sure Ollama is running\n`,
+          ),
+        );
+    }, 1000);
+  }
 });
