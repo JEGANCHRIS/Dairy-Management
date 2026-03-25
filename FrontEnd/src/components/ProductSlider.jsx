@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import api from '../utils/api';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import '../styles/products.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import api from "../utils/api";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "../styles/products.css";
 
 const ProductSlider = () => {
   const [products, setProducts] = useState([]);
@@ -21,12 +21,19 @@ const ProductSlider = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get('/products/latest?limit=8');
-      console.log('Fetched products:', response.data);
-      setProducts(response.data);
+      const response = await api.get("/products/latest?limit=8");
+      console.log("Fetched products:", response.data);
+
+      // Handle both array and object responses
+      const productsData = Array.isArray(response.data)
+        ? response.data
+        : response.data.products || [];
+
+      setProducts(productsData);
     } catch (error) {
-      console.error('Error fetching latest products:', error);
-      setError('Failed to load products');
+      console.error("Error fetching latest products:", error);
+      setError("Failed to load products");
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -116,14 +123,17 @@ const ProductSlider = () => {
                 <Link to={`/product/${product._id}`}>
                   <div className="product-image">
                     <img
-                      src={product.images && product.images[0]
-                        ? (product.images[0].startsWith('/uploads')
-                          ? 'http://localhost:5000' + product.images[0]
-                          : product.images[0])
-                        : 'https://via.placeholder.com/500x500?text=No+Image'}
+                      src={
+                        product.images && product.images[0]
+                          ? product.images[0].startsWith("/uploads")
+                            ? "http://localhost:5000" + product.images[0]
+                            : product.images[0]
+                          : "https://via.placeholder.com/500x500?text=No+Image"
+                      }
                       alt={product.name}
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/500x500?text=No+Image';
+                        e.target.src =
+                          "https://via.placeholder.com/500x500?text=No+Image";
                       }}
                     />
                   </div>
