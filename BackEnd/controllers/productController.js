@@ -1,4 +1,4 @@
-const Product = require('../models/Product');
+const Product = require("../models/Product");
 
 // Get all products with pagination
 const getProducts = async (req, res) => {
@@ -6,7 +6,7 @@ const getProducts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 50;
     const skip = (page - 1) * limit;
-    const showAll = req.query.showAll === 'true'; // admins can pass showAll=true
+    const showAll = req.query.showAll === "true"; // admins can pass showAll=true
 
     // Only show active products unless admin requests all
     const filter = showAll ? {} : { isActive: { $ne: false } };
@@ -22,11 +22,18 @@ const getProducts = async (req, res) => {
       products,
       currentPage: page,
       totalPages: Math.ceil(total / limit),
-      totalProducts: total
+      totalProducts: total,
     });
   } catch (error) {
-    console.error('Get products error:', error);
-    res.status(500).json({ error: 'Error fetching products' });
+    console.error("Get products error:", error);
+    // Return empty data if MongoDB is not connected
+    res.json({
+      products: [],
+      currentPage: 1,
+      totalPages: 0,
+      totalProducts: 0,
+      message: "Database not connected - no products available",
+    });
   }
 };
 
@@ -34,15 +41,15 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    
+
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
 
     res.json(product);
   } catch (error) {
-    console.error('Get product by ID error:', error);
-    res.status(500).json({ error: 'Error fetching product' });
+    console.error("Get product by ID error:", error);
+    res.status(500).json({ error: "Error fetching product" });
   }
 };
 
@@ -50,26 +57,25 @@ const getProductById = async (req, res) => {
 const getLatestProducts = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 6;
-    
-    const products = await Product.find()
-      .sort({ createdAt: -1 })
-      .limit(limit);
+
+    const products = await Product.find().sort({ createdAt: -1 }).limit(limit);
 
     res.json(products);
   } catch (error) {
-    console.error('Get latest products error:', error);
-    res.status(500).json({ error: 'Error fetching latest products' });
+    console.error("Get latest products error:", error);
+    // Return empty data if MongoDB is not connected
+    res.json([]);
   }
 };
 
 // Get all categories with their varieties
 const getCategories = async (req, res) => {
   try {
-    const products = await Product.find().select('category variety');
-    
+    const products = await Product.find().select("category variety");
+
     const categories = {};
-    
-    products.forEach(product => {
+
+    products.forEach((product) => {
       if (!categories[product.category]) {
         categories[product.category] = new Set();
       }
@@ -77,14 +83,14 @@ const getCategories = async (req, res) => {
     });
 
     // Convert Sets to Arrays
-    Object.keys(categories).forEach(key => {
+    Object.keys(categories).forEach((key) => {
       categories[key] = Array.from(categories[key]);
     });
 
     res.json(categories);
   } catch (error) {
-    console.error('Get categories error:', error);
-    res.status(500).json({ error: 'Error fetching categories' });
+    console.error("Get categories error:", error);
+    res.status(500).json({ error: "Error fetching categories" });
   }
 };
 
@@ -101,8 +107,8 @@ const filterProducts = async (req, res) => {
 
     res.json(products);
   } catch (error) {
-    console.error('Filter products error:', error);
-    res.status(500).json({ error: 'Error filtering products' });
+    console.error("Filter products error:", error);
+    res.status(500).json({ error: "Error filtering products" });
   }
 };
 
@@ -110,19 +116,19 @@ const filterProducts = async (req, res) => {
 const searchProducts = async (req, res) => {
   try {
     const { q } = req.query;
-    
+
     if (!q) {
       return res.json([]);
     }
 
     const products = await Product.find({
-      name: { $regex: q, $options: 'i' }
+      name: { $regex: q, $options: "i" },
     }).limit(20);
 
     res.json(products);
   } catch (error) {
-    console.error('Search products error:', error);
-    res.status(500).json({ error: 'Error searching products' });
+    console.error("Search products error:", error);
+    res.status(500).json({ error: "Error searching products" });
   }
 };
 
@@ -130,25 +136,25 @@ const searchProducts = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const productData = req.body;
-    
+
     const product = new Product(productData);
     await product.save();
 
     res.status(201).json({
-      message: 'Product created successfully',
-      product
+      message: "Product created successfully",
+      product,
     });
   } catch (error) {
-    console.error('Create product error:', error);
-    
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ 
-        error: 'Validation Error', 
-        details: Object.values(error.errors).map(e => e.message)
+    console.error("Create product error:", error);
+
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        error: "Validation Error",
+        details: Object.values(error.errors).map((e) => e.message),
       });
     }
 
-    res.status(500).json({ error: 'Error creating product' });
+    res.status(500).json({ error: "Error creating product" });
   }
 };
 
@@ -158,43 +164,42 @@ const updateProduct = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
-    console.log('Updating product:', id);
-    console.log('Updates:', updates);
+    console.log("Updating product:", id);
+    console.log("Updates:", updates);
 
     updates.updatedAt = Date.now();
 
-    const product = await Product.findByIdAndUpdate(
-      id,
-      updates,
-      { new: true, runValidators: true }
-    );
+    const product = await Product.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
 
-    console.log('Product updated successfully:', product._id);
+    console.log("Product updated successfully:", product._id);
     res.json({
-      message: 'Product updated successfully',
-      product
+      message: "Product updated successfully",
+      product,
     });
   } catch (error) {
-    console.error('Update product error:', error);
+    console.error("Update product error:", error);
 
-    if (error.name === 'ValidationError') {
-      const messages = Object.values(error.errors).map(e => e.message);
-      console.error('Validation errors:', messages);
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map((e) => e.message);
+      console.error("Validation errors:", messages);
       return res.status(400).json({
-        error: 'Validation Error',
-        details: messages
+        error: "Validation Error",
+        details: messages,
       });
     }
 
-    if (error.name === 'CastError') {
-      return res.status(400).json({ error: 'Invalid product ID' });
+    if (error.name === "CastError") {
+      return res.status(400).json({ error: "Invalid product ID" });
     }
 
-    res.status(500).json({ error: 'Error updating product: ' + error.message });
+    res.status(500).json({ error: "Error updating product: " + error.message });
   }
 };
 
@@ -206,15 +211,15 @@ const deleteProduct = async (req, res) => {
     const product = await Product.findByIdAndDelete(id);
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
 
     res.json({
-      message: 'Product deleted successfully'
+      message: "Product deleted successfully",
     });
   } catch (error) {
-    console.error('Delete product error:', error);
-    res.status(500).json({ error: 'Error deleting product' });
+    console.error("Delete product error:", error);
+    res.status(500).json({ error: "Error deleting product" });
   }
 };
 
@@ -227,5 +232,5 @@ module.exports = {
   searchProducts,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };
