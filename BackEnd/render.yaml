@@ -4,7 +4,7 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: cd FrontEnd && npm install && npm run build && cd ../BackEnd && npm install
+    buildCommand: bash build.sh
     startCommand: node BackEnd/server.js
     envVars:
       - key: NODE_ENV
@@ -23,3 +23,5 @@ services:
         value: llama3.2
       - key: ML_SERVICE_URL
         sync: false
+    healthCheckPath: /health
+    autoDeploy: true
