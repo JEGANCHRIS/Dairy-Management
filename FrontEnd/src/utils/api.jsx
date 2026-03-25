@@ -1,28 +1,25 @@
 import axios from "axios";
 
-// In production, use relative URLs (same domain as the server)
-// In development, use the Vite proxy
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
-
+// Create axios instance - baseURL will be set dynamically
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: "",
   headers: {
     "Content-Type": "application/json",
   },
   withCredentials: true,
 });
 
-// Force baseURL to empty string if it contains localhost in production
-if (
-  typeof window !== "undefined" &&
-  !window.location.hostname.includes("localhost")
-) {
-  api.defaults.baseURL = "";
-}
-
-// Request interceptor to add token
+// Request interceptor to set correct baseURL and add token
 api.interceptors.request.use(
   (config) => {
+    // In production (non-localhost), use current domain origin
+    if (
+      typeof window !== "undefined" &&
+      window.location.hostname !== "localhost"
+    ) {
+      config.baseURL = window.location.origin;
+    }
+
     const token = localStorage.getItem("token");
     console.log(
       "🔑 API Request:",
@@ -61,7 +58,6 @@ api.interceptors.response.use(
       "- Error:",
       error.response?.data?.error || error.message,
     );
-    // Don't auto-redirect on 401 - let components handle it
     return Promise.reject(error);
   },
 );
