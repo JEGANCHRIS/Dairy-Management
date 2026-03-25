@@ -5,9 +5,15 @@ echo "==> Current directory: $(pwd)"
 echo "==> Listing files:"
 ls -la
 
-# Remove any existing .env to ensure clean build
-echo "==> Removing any existing .env files..."
+# COMPLETE CLEAN BUILD - remove all caches
+echo "==> Cleaning all caches..."
+rm -rf FrontEnd/node_modules
+rm -rf FrontEnd/.vite
+rm -rf FrontEnd/dist
 rm -f FrontEnd/.env
+
+# Create fresh .env with empty API URL
+echo "==> Creating fresh .env..."
 echo "VITE_API_URL=" > FrontEnd/.env
 cat FrontEnd/.env
 
