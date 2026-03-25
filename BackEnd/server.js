@@ -121,7 +121,19 @@ app.use("/api/gemini", geminiRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/bank-accounts", bankAccountRoutes);
 
-console.log("✅ Wishlist routes loaded at /api/wishlist");
+console.log("✅ All API routes loaded:");
+console.log("   /api/auth");
+console.log("   /api/admin");
+console.log("   /api/admin-ai");
+console.log("   /api/blogs");
+console.log("   /api/orders");
+console.log("   /api/payments");
+console.log("   /api/products");
+console.log("   /api/upload");
+console.log("   /api/contact");
+console.log("   /api/gemini");
+console.log("   /api/wishlist");
+console.log("   /api/bank-accounts");
 
 // ==========================================
 // ERROR HANDLERS

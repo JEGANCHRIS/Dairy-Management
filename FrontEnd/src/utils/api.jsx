@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Create axios instance - baseURL will be set dynamically
+// Create axios instance with explicit baseURL handling
 const api = axios.create({
   baseURL: "",
   headers: {
@@ -9,7 +9,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor to set correct baseURL and add token
+// Request interceptor to ensure correct API calls
 api.interceptors.request.use(
   (config) => {
     // In production (non-localhost), use current domain origin
@@ -17,7 +17,13 @@ api.interceptors.request.use(
       typeof window !== "undefined" &&
       window.location.hostname !== "localhost"
     ) {
+      // Ensure baseURL is set to current origin
       config.baseURL = window.location.origin;
+
+      // Ensure URL starts with /api
+      if (!config.url.startsWith("/api") && !config.url.startsWith("http")) {
+        config.url = "/api" + config.url;
+      }
     }
 
     const token = localStorage.getItem("token");
@@ -25,8 +31,10 @@ api.interceptors.request.use(
       "🔑 API Request:",
       config.method?.toUpperCase(),
       config.url,
+      "- BaseURL:",
+      config.baseURL,
       "- Token:",
-      token ? "PRESENT (" + token.substring(0, 20) + "...)" : "MISSING",
+      token ? "PRESENT" : "MISSING",
     );
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -38,7 +46,7 @@ api.interceptors.request.use(
   },
 );
 
-// Response interceptor for error handling
+// Response interceptor
 api.interceptors.response.use(
   (response) => {
     console.log(
@@ -53,6 +61,10 @@ api.interceptors.response.use(
     console.error(
       "❌ API Error:",
       error.config?.url,
+      "- BaseURL:",
+      error.config?.baseURL,
+      "- Full URL:",
+      error.config?.baseURL + error.config?.url,
       "- Status:",
       error.response?.status,
       "- Error:",
