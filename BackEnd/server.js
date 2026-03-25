@@ -28,7 +28,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// No app.options() needed - cors() middleware handles OPTIONS automatically
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
